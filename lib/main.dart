@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
-import 'src/utils/app_router.dart';
+import 'src/pages/detail_page.dart';
+import 'src/pages/home_page.dart';
 import 'src/utils/deep_link_handler.dart';
+import 'src/utils/navigator_util.dart';
 import 'src/utils/notification_handler.dart';
 
 void main() {
@@ -23,13 +25,18 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
-      routerConfig: AppRouter.router,
+    return MaterialApp(
+      navigatorKey: NavigatorUtil.key,
       title: 'Mobile Dev Tools - VSCode',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
+      initialRoute: '/',
+      routes: {
+        '/': (context) => const HomePage(),
+        '/details': (context) => const DetailsPage(),
+      },
     );
   }
 }

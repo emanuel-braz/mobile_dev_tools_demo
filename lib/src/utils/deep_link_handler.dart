@@ -1,10 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:go_router/go_router.dart';
 
 import 'navigator_util.dart';
 
 class DeeplinkHandler {
+  static var _initialLink = '';
+  static String get initialLink {
+    final link = _initialLink;
+    _initialLink = '';
+    return link;
+  }
+
+  static get hasInitialLink => _initialLink.isNotEmpty;
   static const MethodChannel _channel = MethodChannel('com.emanuelbraz.vscode/deeplink');
 
   DeeplinkHandler() {
@@ -16,28 +23,28 @@ class DeeplinkHandler {
   Future<void> _handleMethodCall(MethodCall call) async {
     if (call.method == 'onDeeplink') {
       String? deeplink = call.arguments as String?;
-      if (deeplink != null) {
-        debugPrint('Received deeplink: $deeplink');
+      debugPrint('Received deeplink: $deeplink');
 
-        final uri = Uri.parse(deeplink);
+      if (deeplink != null) {
+        if (!hasInitialLink) {
+          _initialLink = deeplink;
+        }
+
+        final context = NavigatorUtil.key.currentContext;
+        if (context == null || !context.mounted) {
+          return;
+        }
+
         final route = deeplink.split(':/').last;
+        Navigator.of(NavigatorUtil.key.currentContext!).pushNamed(route);
 
         showDialog(
           context: NavigatorUtil.key.currentContext!,
           builder: (context) {
             return AlertDialog(
-              title: const Text('Deeplink Received'),
-              content: Text('''scheme: ${uri.scheme}
-host: ${uri.host.isEmpty ? uri.path.split('/').first : uri.host}
-path: ${uri.path}'''),
+              title: const Text('Deeplink received'),
+              content: Text('Deeplink: $deeplink'),
               actions: [
-                TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                    NavigatorUtil.key.currentContext!.go(route);
-                  },
-                  child: const Text('Navigate'),
-                ),
                 TextButton(
                   onPressed: () {
                     Navigator.of(context).pop();

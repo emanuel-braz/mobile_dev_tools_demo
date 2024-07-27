@@ -1,10 +1,29 @@
 import 'package:flutter/material.dart';
 
+import '../utils/deep_link_handler.dart';
 import '../utils/launch_url.dart';
 import '../utils/notification_handler.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  @override
+  initState() {
+    super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (DeeplinkHandler.hasInitialLink) {
+        final initialLink = DeeplinkHandler.initialLink;
+        final route = initialLink.split(':/').last;
+        Navigator.of(context).pushNamed(route);
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,16 +42,24 @@ class HomePage extends StatelessWidget {
                 UrlLauncher.launchUrl('https://marketplace.visualstudio.com/items?itemName=emanuel-braz.deeplink');
               },
               child: const ListTile(
-                title: Text('Open deeplink using the Mobile Dev Tools'),
-                subtitle: Text('example://showcase/product/123'),
+                title: Text('Open Mobile Dev Tools page'),
+              ),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                UrlLauncher.launchUrl('example://details');
+              },
+              child: const ListTile(
+                title: Text('Open deeplink'),
+                subtitle: Text('deeplink -> example://details'),
               ),
             ),
             ElevatedButton(
               onPressed: () {
                 NotificationHandler.scheduleNotification(
                   {
-                    'title': 'Local Notification MethodChannel',
-                    'body': 'Using userInfo to send data',
+                    'title': 'Send Local Notification',
+                    'body': 'Using userInfo to pass data',
                     'userInfo': {
                       'myString': 'foo',
                       'myJson': {'name': 'Emanuel', 'lastName': 'Braz'},

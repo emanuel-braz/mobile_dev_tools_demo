@@ -1,12 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 
 class DetailsPage extends StatelessWidget {
-  final String? productId;
-  const DetailsPage({
-    required this.productId,
-    super.key,
-  });
+  const DetailsPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -15,17 +10,11 @@ class DetailsPage extends StatelessWidget {
         title: const Text('Details Page'),
       ),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text('Product ID: $productId'),
-            ElevatedButton(
-              onPressed: () {
-                context.go('/');
-              },
-              child: const Text('Back to Home Page'),
-            ),
-          ],
+        child: ElevatedButton(
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+          child: const Text('Back to Home Page'),
         ),
       ),
     );
