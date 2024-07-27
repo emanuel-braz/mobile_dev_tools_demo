@@ -1,16 +1,23 @@
-# vscode_example
+# Mobile Dev Tools VSCode Extension - Demo Project
 
-A new Flutter project.
+Welcome to the **Mobile Dev Tools** VSCode Extension demo project! 
+
+Mobile Dev Tools is designed to enhance your mobile app development workflow by providing a suite of powerful tools directly within Visual Studio Code.
+
+## Installation
+
+You can install the extension directly from the Visual Studio Code Marketplace:
+
+[**Install Mobile Dev Tools**](https://marketplace.visualstudio.com/items?itemName=emanuel-braz.deeplink)
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+1. **Install the Extension**: Follow the installation link above to add the extension to your VSCode setup.
+2. **Activate the Tools**: Access the tools from the command palette (`Cmd+Shift+P` on macOS or `Ctrl+Shift+P` on Windows/Linux) and search for "Mobile Dev Tools".
+3. **Explore Features**: Utilize the various features to streamline your mobile development process.
 
-A few resources to get you started if this is your first Flutter project:
+## Running the Demo Project (iOS Simulator)
+**Clone and Run this Project**: Once you are in the project directory, use the run button ► from `RUN AND DEBUG` panel in VSCode to run the project in the iOS simulator.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+---
+Happy coding with Mobile Dev Tools!
